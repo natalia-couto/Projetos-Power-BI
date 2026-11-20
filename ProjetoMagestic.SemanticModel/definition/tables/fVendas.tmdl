@@ -159,7 +159,7 @@ table fVendas
 		mode: import
 		source =
 				let
-				    Source = Excel.Workbook(File.Contents("C:\Users\CoutoN\OneDrive - BASF\Documents\1. Arquivos Pessoais\Projeto Magestic\Dados\Majestic Exportadora Mini.xlsx"), null, true),
+				    Source = Excel.Workbook(File.Contents("C:\Users\nc_ol\OneDrive\Documents\Projeto Magestic\Dados\Majestic Exportadora Mini.xlsx"), null, true),
 				    fVendas_Table = Source{[Item="fVendas",Kind="Table"]}[Data],
 				    #"Changed Type" = Table.TransformColumnTypes(fVendas_Table,{{"idVenda", Int64.Type}, {"idNota", Int64.Type}, {"Data", type date}, {"Frete", Int64.Type}, {"Desconto", Int64.Type}, {"Vendedor", Int64.Type}, {"Cliente", Int64.Type}, {"Produto", Int64.Type}, {"Quantidade", Int64.Type}, {"Filial", Int64.Type}, {"Forma de Pagamento", Int64.Type}, {"Data de Faturamento", type date}})
 				in

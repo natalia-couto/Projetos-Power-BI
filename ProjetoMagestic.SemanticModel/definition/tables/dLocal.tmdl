@@ -58,7 +58,7 @@ table dLocal
 		mode: import
 		source =
 				let
-				    Source = Excel.Workbook(File.Contents("C:\Users\CoutoN\OneDrive - BASF\Documents\1. Arquivos Pessoais\Projeto Magestic\Dados\Majestic Exportadora Mini.xlsx"), null, true),
+				    Source = Excel.Workbook(File.Contents("C:\Users\nc_ol\OneDrive\Documents\Projeto Magestic\Dados\Majestic Exportadora Mini.xlsx"), null, true),
 				    dLocal_Table = Source{[Item="dLocal",Kind="Table"]}[Data],
 				    #"Changed Type" = Table.TransformColumnTypes(dLocal_Table,{{"IdCidade", Int64.Type}, {"Cidade", type text}, {"Estado", type text}, {"País", type text}, {"Continente", type text}, {"Bandeira", type text}})
 				in

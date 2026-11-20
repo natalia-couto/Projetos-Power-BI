@@ -34,7 +34,7 @@ table fMetas
 		mode: import
 		source =
 				let
-				    Source = Csv.Document(File.Contents("C:\Users\CoutoN\OneDrive - BASF\Documents\1. Arquivos Pessoais\Projeto Magestic\Dados\Arquivo de Metas.txt"),[Delimiter="#(tab)", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    Source = Csv.Document(File.Contents("C:\Users\nc_ol\OneDrive\Documents\Projeto Magestic\Dados\Arquivo de Metas.txt"),[Delimiter="#(tab)", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
 				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
 				    #"Changed Type with Locale" = Table.TransformColumnTypes(#"Promoted Headers", {{"Meta", type number}}, "en-US"),
 				    #"Changed Type" = Table.TransformColumnTypes(#"Changed Type with Locale",{{"Mes", type date}, {"idGerencia", Int64.Type}})
