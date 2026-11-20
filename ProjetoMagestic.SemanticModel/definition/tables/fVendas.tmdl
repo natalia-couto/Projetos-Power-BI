@@ -1,0 +1,171 @@
+table fVendas
+	lineageTag: ad8518a7-844a-41b0-afde-fc6d2b6fd1ba
+
+	column idVenda
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 2a7cce0d-c477-4c7d-97ad-6511084eb47c
+		summarizeBy: sum
+		sourceColumn: idVenda
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column idNota
+		dataType: int64
+		formatString: 0
+		lineageTag: 1fc0f043-97bc-4ffd-9ae0-c40d7d260f49
+		summarizeBy: sum
+		sourceColumn: idNota
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Data
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 24fce2d1-44fd-4ae6-a159-1eb24cbf060f
+		summarizeBy: none
+		sourceColumn: Data
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Frete
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 216d1122-b15f-4e88-a727-d1982bd6c548
+		summarizeBy: sum
+		sourceColumn: Frete
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Desconto
+		dataType: int64
+		formatString: #,0
+		lineageTag: 112e0346-5b6a-484d-9d10-27d1957138f9
+		summarizeBy: sum
+		sourceColumn: Desconto
+
+		annotation SummarizationSetBy = Automatic
+
+	column Vendedor
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 8c736580-2d48-48fb-a174-dad3bf4b5747
+		summarizeBy: none
+		sourceColumn: Vendedor
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cliente
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 9f9960e9-6624-4d85-8596-9fd20c025e87
+		summarizeBy: none
+		sourceColumn: Cliente
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Produto
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 226baf66-a94a-4e99-922c-39a4d504f92c
+		summarizeBy: none
+		sourceColumn: Produto
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quantidade
+		dataType: int64
+		formatString: 0
+		lineageTag: 600b7c59-16a5-4643-9738-53b163734a25
+		summarizeBy: sum
+		sourceColumn: Quantidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column Filial
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: e0ab7439-c26e-49e2-8904-c2f9863f2761
+		summarizeBy: none
+		sourceColumn: Filial
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Forma de Pagamento'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 982daf7d-f666-4bcc-a76f-de62d47e44f8
+		summarizeBy: none
+		sourceColumn: Forma de Pagamento
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Data de Faturamento'
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 33f449d0-dc39-4520-9b90-0a4e7fa3886e
+		summarizeBy: none
+		sourceColumn: Data de Faturamento
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Vl.Frete' =
+			
+			LOOKUPVALUE(
+			    AuxFrete[VLFrete],
+			    AuxFrete[idNota], fVendas[idNota]
+			)
+		lineageTag: 480159d7-11c1-476b-81fa-929c8f60d8af
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition fVendas = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\CoutoN\OneDrive - BASF\Documents\1. Arquivos Pessoais\Projeto Magestic\Dados\Majestic Exportadora Mini.xlsx"), null, true),
+				    fVendas_Table = Source{[Item="fVendas",Kind="Table"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(fVendas_Table,{{"idVenda", Int64.Type}, {"idNota", Int64.Type}, {"Data", type date}, {"Frete", Int64.Type}, {"Desconto", Int64.Type}, {"Vendedor", Int64.Type}, {"Cliente", Int64.Type}, {"Produto", Int64.Type}, {"Quantidade", Int64.Type}, {"Filial", Int64.Type}, {"Forma de Pagamento", Int64.Type}, {"Data de Faturamento", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

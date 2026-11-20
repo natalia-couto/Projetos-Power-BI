@@ -1,0 +1,1017 @@
+table Medidas
+	lineageTag: 17482034-0c12-46b1-833e-34ab627e91e3
+
+	measure '01 Quantidade Total' = ```
+			
+			sum(fVendas[Quantidade])
+			
+			
+			
+			```
+		formatString: #,0
+		lineageTag: fa9ab841-eae2-4012-ab02-dd6b652f11b8
+
+	measure '02 Frete Total' = sum(fVendas[Vl.Frete])
+		formatString: "R$"\ #,0;-"R$"\ #,0;"R$"\ #,0
+		lineageTag: 5e77893a-74f8-438e-96b5-4f2b82cd21d7
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure '03 Quantidade Máxima por Item' = ```
+			max(fVendas[Quantidade])
+			 
+			 
+			  
+			```
+		formatString: 0
+		lineageTag: 664780f2-ad94-4eff-9aa7-dfc569556e67
+
+	measure '04 Qtde Média por Item de Venda' = ```
+			
+			AVERAGE(fVendas[Quantidade])
+			
+			```
+		lineageTag: 77889356-bda2-48d3-b8de-49623b388e03
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'SE Quatidade Minima por Item' = ```
+			MIN(fVendas[Quantidade])
+			
+			
+			
+			```
+		formatString: 0
+		lineageTag: 84b9e207-9353-4eb2-ae9e-3999c1a19b03
+
+	measure '05 Total de venda Bruto' =
+			SUMX(
+			    fVendas,
+			    fVendas[Quantidade]*RELATED(dProduto[Valor Unitario])
+			)
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: f882b8fd-b24a-4242-bcda-546728358e5a
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure '06 Media Bruta por Item' = AVERAGEX(fVendas, fVendas[Quantidade] * RELATED(dProduto[Valor Unitario]))
+		lineageTag: e3705943-f80f-47fc-ad83-ea35cd1ad82a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '07 Total do Custo' = ```
+			SUMX(fVendas, fVendas[Quantidade] * RELATED(dProduto[Custo Unitário]))
+			
+			
+			
+			```
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: 2c31a548-da6a-4f34-939e-af4ff8a8af20
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure '08 Custo Medio por Item' = ```
+			AVERAGEX(fVendas, fVendas[Quantidade] * RELATED(dProduto[Custo Unitário]))
+			
+			
+			
+			```
+		lineageTag: b3a48ed2-c08a-48c3-ac15-147af8350f67
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '09 Maximo Item de Venda' = MAXX(fVendas, fVendas[Quantidade] * RELATED(dProduto[Valor Unitario]))
+		lineageTag: 41c6e8d7-f5bd-41bc-92d3-d2e2ba661f42
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '10 Minimo Item de Venda' = MINX(fVendas, fVendas[Quantidade] * RELATED(dProduto[Valor Unitario]))
+		lineageTag: bba4ade8-f14a-40f1-9ef6-9fa654c9510c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '11 Quantidade de vendas' = DISTINCTCOUNT(fVendas[idNota])
+		formatString: #,0
+		lineageTag: 94f86824-60f3-4955-9f8a-55664e97f449
+
+	measure '12 Quantiadde de Itens de Venda' = COUNTROWS(fVendas)
+		formatString: 0
+		lineageTag: 08311f24-9fd6-4e72-8c90-124ab89d11cf
+
+	measure '13 Total do Desconto' =
+			SUMX(
+			    fVendas,
+			    fVendas[Quantidade]*RELATED(dProduto[Valor Unitario])*(fVendas[Desconto]/100))
+		formatString: "R$"\ #,0;-"R$"\ #,0;"R$"\ #,0
+		lineageTag: d940021b-16e0-4483-85e0-4865aaf0674a
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure '14 Receita Líquida' = ```
+			
+			var vTotalBruto = [05 Total de venda Bruto]
+			var vTotalDespesas = ([07 Total do Custo]+[02 Frete Total]+[13 Total do Desconto])
+			
+			return 
+			
+			vTotalBruto - vTotalDespesas
+			```
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: ad3e34c7-3e9b-4031-8664-97a5240ccb7d
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure '15 Margem de Lucro(%)' = divide([14 Receita Líquida], [05 Total de venda Bruto],0)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 8698fd8e-8068-4c31-9d5a-9bbbee77a763
+
+	measure '16 Ticket Médio' = Divide ([05 Total de venda Bruto], [11 Quantidade de vendas],0)
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: 8fe9be7b-5e3f-4cd3-819b-0dbd5968a04a
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure '17 Quantidade de Clientes na Base' = ```
+			COUNTROWS(dCliente)
+			
+			
+			
+			```
+		formatString: 0
+		lineageTag: c766d80e-a049-47d6-a359-b9d9e3db67d0
+
+	measure '18 Quantidade de Clientes Positivados' = DISTINCTCOUNT(fVendas[Cliente])
+		formatString: 0
+		lineageTag: f019f312-a78e-4f4b-9d5c-008c9a3eec11
+
+	measure '19 Clientes nao positivados' =
+			
+			COUNTROWS(
+			except(
+			    values(dCliente[idCliente]), --clientes no geral
+			    VALUES(fVendas[Cliente])     --clientes que compraram
+			))
+		formatString: 0
+		lineageTag: 2b820541-30c4-43cc-8fc8-344187db006a
+
+	measure '20 America do Norte Vendas' = ```
+			
+			CALCULATE(
+			[05 Total de venda Bruto],
+			dLocal[Continente] = "América do Norte")
+			
+			
+			```
+		lineageTag: 91417c4d-f4ea-4799-8dd4-3be521c7200b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '21 America do Norte Clientes Positivados' = ```
+			
+			CALCULATE([18 Quantidade de Clientes Positivados], dLocal[Continente] = "América do Norte")
+			
+			
+			
+			```
+		formatString: 0
+		lineageTag: d8bd3585-7bd1-40ca-b933-e9eb667db72b
+
+	measure '22 América do Norte Quantidade de Vendas' = ```
+			CALCULATE([11 Quantidade de vendas], dLocal[Continente] = "América do Norte")
+			
+			
+			```
+		formatString: 0
+		lineageTag: bba02464-3976-4696-9c69-197cff0de90a
+
+	measure '23 América do Norte Receita Líquida' = CALCULATE([14 Receita Líquida], dLocal[Continente] = "América do Norte")
+		lineageTag: 6a665354-cbdc-492f-8d6c-285ef43ac3e8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '24 Oceania Vendas' = ```
+			
+			CALCULATE(
+			[05 Total de venda Bruto],
+			dLocal[Continente] = "Oceania")
+			
+			
+			```
+		lineageTag: ba56ce93-4613-411c-89f1-710029881f74
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '25 Oceania Clientes Positivados' =
+			
+			CALCULATE([18 Quantidade de Clientes Positivados], dLocal[Continente] = "Oceania")
+		formatString: 0
+		lineageTag: 8077d715-8adb-4e95-a3b5-142783e4f092
+
+	measure '26 Oceania Quantidade de Vendas' = CALCULATE([11 Quantidade de vendas], dLocal[Continente] = "Oceania")
+		formatString: 0
+		lineageTag: 8584faee-3f0d-4f8e-863b-f04c70f0bf2d
+
+	measure '27 Oceania Receita Líquida' = CALCULATE([14 Receita Líquida], dLocal[Continente] = "Oceania")
+		lineageTag: 46819343-7734-4677-b884-102da2722c49
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '28 America do Sul Vendas' =
+			
+			CALCULATE(
+			[05 Total de venda Bruto],
+			dLocal[Continente] = "América do Sul")
+		lineageTag: 8ea10669-ce01-4b01-82cb-4b3f0df0c0a4
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '29 America do Sul Clientes Positivados' = ```
+			
+			CALCULATE([18 Quantidade de Clientes Positivados], dLocal[Continente] = "América do Sul")
+			
+			```
+		formatString: 0
+		lineageTag: 69039718-8275-41d4-99f7-0803268f50dc
+
+	measure '30 América do Sul Quantidade de Vendas' = CALCULATE([11 Quantidade de vendas], dLocal[Continente] = "América do Sul")
+		formatString: 0
+		lineageTag: a111a3a7-2073-4844-8a33-43d4f02c7b2e
+
+	measure '31 América do Sul Receita Líquida' = CALCULATE([14 Receita Líquida], dLocal[Continente] = "América do Sul")
+		lineageTag: de1e2329-a920-44a1-a8c4-c8ad498d0823
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '32 Europa Vendas' = ```
+			
+			CALCULATE(
+			[05 Total de venda Bruto],
+			dLocal[Continente] = "Europa")
+			
+			```
+		lineageTag: 8dd55fb3-e598-465d-89cd-85d648ed8aa1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '33 Europa Clientes Positivados' =
+			
+			CALCULATE([18 Quantidade de Clientes Positivados], dLocal[Continente] = "Europa")
+		formatString: 0
+		lineageTag: a1bdaa44-11c7-46e8-88c0-4a5ef147b136
+
+	measure '34 Europa Quantidade de Vendas' = CALCULATE([11 Quantidade de vendas], dLocal[Continente] = "Europa")
+		formatString: 0
+		lineageTag: 21a8b34e-83db-4628-9352-f0bb58e6d314
+
+	measure '35 Europa Receita Líquida' = CALCULATE([14 Receita Líquida], dLocal[Continente] = "Europa")
+		lineageTag: 190a28b1-4f88-4774-828b-615c275e26e6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '36 Classificação do Produto (Receita)' =
+			
+			SWITCH(
+			    TRUE(),
+			    [14 Receita Líquida] > 4000000, "Excelente",
+			    [14 Receita Líquida] > 3000000, "Muito Bom",
+			    [14 Receita Líquida] > 2000000, "Bom",
+			    [14 Receita Líquida] > 1000000, "Satisfatório",
+			    [14 Receita Líquida] > 700000, "Regular",
+			    [14 Receita Líquida] > 600000, "Avaliar",
+			    [14 Receita Líquida] > 400000, "Atenção",
+			    "Ruim"
+			)
+		lineageTag: 311da8b8-cbd9-46d8-9965-cfacc253f738
+
+	measure '37 Visao America do Norte' =
+			
+			SWITCH(
+			    FIRSTNONBLANK(TbMedidas[Código], "BRT"),
+			    "BRT", [20 America do Norte Vendas],
+			    "QTC", [21 America do Norte Clientes Positivados],
+			    "QTV", [22 América do Norte Quantidade de Vendas],
+			    "LIQ", [23 América do Norte Receita Líquida]
+			)
+		lineageTag: 8017070b-3423-48d0-be75-de3d9576b8f7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '38 Visao America do Sul' = ```
+			
+			SWITCH(
+			    FIRSTNONBLANK(TbMedidas[Código], "BRT"),
+			    "BRT", [28 America do Sul Vendas],
+			    "QTC", [29 America do Sul Clientes Positivados],
+			    "QTV", [30 América do Sul Quantidade de Vendas],
+			    "LIQ", [31 América do Sul Receita Líquida]
+			)
+			
+			```
+		lineageTag: ff22a075-35b7-4c24-8d07-50dd8ab27777
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '39 Visao Europa' =
+			
+			SWITCH(
+			    FIRSTNONBLANK(TbMedidas[Código], "BRT"),
+			    "BRT", [32 Europa Vendas],
+			    "QTC", [33 Europa Clientes Positivados],
+			    "QTV", [34 Europa Quantidade de Vendas],
+			    "LIQ", [35 Europa Receita Líquida]
+			)
+		lineageTag: 6786c657-8803-43f3-9328-68207d4b620d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '40 Visao Oceania' =
+			
+			SWITCH(
+			    FIRSTNONBLANK(TbMedidas[Código], "BRT"),
+			    "BRT", [24 Oceania Vendas],
+			    "QTC", [25 Oceania Clientes Positivados],
+			    "QTV", [26 Oceania Quantidade de Vendas],
+			    "LIQ", [27 Oceania Receita Líquida]
+			)
+		lineageTag: 3e3a3ab7-6573-483b-84c2-1afb9c606719
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '41 - Top 1 margem de Lucro (%)' = ```
+			
+			
+			var tbAux =
+			SUMMARIZE(dLocal, dLocal[País], "Lucro (%)", [15 Margem de Lucro(%)])
+			
+			return
+			
+			MAXX(tbAux,[Lucro (%)])
+			
+			
+			
+			```
+		lineageTag: 21fad8dd-bb0b-411b-b434-68b3950e6980
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '42 - Top 1 Lucro (%) América do Norte' =
+			
+			CALCULATE(
+			    [41 - Top 1 margem de Lucro (%)],dLocal[Continente] = "América do Norte")
+		formatString: 0.000%;-0.000%;0.000%
+		lineageTag: b9666bd3-4d36-43ee-becb-50502cc73711
+
+	measure '43 - Top 1 Lucro (%) Europa' =
+			
+			CALCULATE(
+			    [41 - Top 1 margem de Lucro (%)],dLocal[Continente] = "Europa")
+		formatString: 0.000%;-0.000%;0.000%
+		lineageTag: 5bc5ac54-b092-4af2-bf98-1e9a48eac297
+
+	measure '44 - Top 1 Lucro (%) Oceania' =
+			
+			CALCULATE(
+			    [41 - Top 1 margem de Lucro (%)],dLocal[Continente] = "Oceania")
+		formatString: 0.000%;-0.000%;0.000%
+		lineageTag: 1d0ba35a-0c78-4065-95e6-5f3bbbb75026
+
+	measure '45 - Top 1 Lucro (%) América do Sul' =
+			
+			CALCULATE(
+			    [41 - Top 1 margem de Lucro (%)],dLocal[Continente] = "América do Sul")
+		formatString: 0.000%;-0.000%;0.000%
+		lineageTag: 9d9f788c-12a3-4c35-ada3-e6401c6498bb
+
+	measure '46 Visao Geral' =
+			
+			SWITCH(
+			    FIRSTNONBLANK(TbMedidas[Código], "BRT"),
+			    "BRT", [05 Total de venda Bruto],
+			    "QTC", [18 Quantidade de Clientes Positivados],
+			    "QTV", [11 Quantidade de vendas],
+			    "LIQ", [14 Receita Líquida]
+			)
+		lineageTag: 687d58b6-e289-489d-8b04-b4bf18c9baf8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '47 Qtde Países VALUES' = ```
+			
+			var TbValues = VALUES (dLocal[País])
+			
+			RETURN
+			
+			COUNTROWS(TbValues)
+			
+			
+			
+			
+			```
+		formatString: 0
+		lineageTag: 12dfa7f7-3ab2-4ff4-ac94-1308aa4d1c2d
+
+	measure '48 Qtde Paises ALL' = ```
+			
+			var TbValues = ALL(dLocal[País])
+			
+			RETURN
+			
+			COUNTROWS(TbValues)
+			
+			```
+		formatString: 0
+		lineageTag: 298543e0-3e28-4a22-aa7f-ee4889dde6e2
+
+	measure '49 Faturamento Bruto Total' =
+			
+			CALCULATE(
+			    [05 Total de venda Bruto],
+			    ALL(dVendedor)
+			
+			
+			)
+		lineageTag: 10621b30-fcf1-4db0-9f65-f60d918d5986
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '50 Valor Bruto (%)' =
+			
+			Divide ([05 Total de venda Bruto], [49 Faturamento Bruto Total], 0)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 14974522-7ddd-4f65-9956-36d323c9f4de
+
+	measure 'SE Receita Liquida' = ```
+			
+			CALCULATE([14 Receita Líquida],
+			ALL(dLocal)
+			)
+			
+			
+			```
+		formatString: #,0.00
+		lineageTag: 0cfd31f5-e8d1-46ab-8332-3bcb178dd6f6
+
+	measure 'SE (%) Receita Líquida' =
+			
+			DIVIDE([14 Receita Líquida], [SE Receita Liquida ALLSELECTED], 0)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: dceb21a0-be88-4aca-8902-d94a24b45b88
+
+	measure 'SE Receita Liquida ALLSELECTED' = ```
+			
+			CALCULATE([14 Receita Líquida],
+			ALLSELECTED(dLocal)
+			)
+			
+			```
+		lineageTag: 7d83ff31-237d-4a89-a3ee-62431224ed8c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '51 Ranking Gerentes' =
+			
+			Rankx(
+			    all(dVendedor[Gerente]),[05 Total de venda Bruto]
+			)
+		formatString: 0
+		lineageTag: 5133e414-527b-419b-95e2-d7d79216b58c
+
+	measure '52 Frete Clientes A' = ```
+			
+			sumx(
+			    filter(
+			        fvendas,
+			        RELATED(dCliente[Classificacao]) = "A"
+			        )
+			        ,[02 Frete Total]
+			)
+			    
+			
+			
+			```
+		lineageTag: 965a7609-d863-43f5-a6df-3b4b4afb5d3f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '53 Faturamento Top 1' = ```
+			
+			
+			var TbGerentes = all(dVendedor[Gerente])
+			
+			return
+			
+			calculate(
+			    [05 Total de venda Bruto],
+			    filter(
+			        TbGerentes,
+			        [51 Ranking Gerentes] = 1
+			    )
+			)
+			
+			```
+		formatString: 0
+		lineageTag: b16f585a-7805-445e-a368-94d51fd62a46
+
+	measure '54 Faturamento Top 2' =
+			
+			
+			var TbGerentes = all(dVendedor[Gerente])
+			
+			return
+			
+			calculate(
+			    [05 Total de venda Bruto],
+			    filter(
+			        TbGerentes,
+			        [51 Ranking Gerentes] = 2
+			    )
+			)
+		lineageTag: be354c06-f81e-49c6-8b4f-674cbba7ab5e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '55 Faturamento Top 3' =
+			
+			
+			var TbGerentes = all(dVendedor[Gerente])
+			
+			return
+			
+			calculate(
+			    [05 Total de venda Bruto],
+			    filter(
+			        TbGerentes,
+			        [51 Ranking Gerentes] = 3
+			    )
+			)
+		lineageTag: a1bf31dc-a231-4c56-9f75-cb444d0805e7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'SE Gerente Top 1' = filter(all(dVendedor[Gerente]), [51 Ranking Gerentes] = 1)
+		lineageTag: 09cea8b0-0059-412f-bcfb-f8a43854fca6
+
+	measure '56 Rank URL Gerente' = ```
+			
+			Rankx(
+			    all(dVendedor[URL Gerente]),
+			    [05 Total de venda Bruto]
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 267800ed-8b5d-4b6c-84ba-e257afdc4f05
+
+	measure '57 Vendas Ano Atual' = ```
+			
+			var AnoAtual = MAX(dCalendario[Year])
+			
+			return
+			
+			CALCULATE([05 Total de venda Bruto], dCalendario[Year] = AnoAtual)
+			
+			```
+		formatString: 0
+		lineageTag: 207afe1c-117f-45b5-b2f5-23ff3d19b7b7
+
+	measure '58 Meta do Ano' = ```
+			
+			
+			var AnoAtual = MAX(dCalendario[Year])
+			
+			RETURN
+			
+			CALCULATE( sum(fMetas[Meta]), dCalendario[Year] = AnoAtual)
+			
+			```
+		lineageTag: 083e16d7-c3b4-41d7-b421-1e48109cedb7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '59 Variação da meta' = ```
+			
+			[57 Vendas Ano Atual] - [58 Meta do Ano]
+			
+			
+			
+			```
+		lineageTag: 3ec740fe-3120-4e8b-ab1a-14a49a4691a8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '60 Variação da Meta (%)' =
+			
+			
+			divide([59 Variação da meta],[58 Meta do Ano],0)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: d894c590-e90e-44ea-ae62-4b3a44baee53
+
+	measure '61 Vendas Ano Anterior' = ```
+			
+			
+			var VVendas =
+			CALCULATE([57 Vendas Ano Atual],
+			DATEADD(dCalendario[Data], -1,YEAR)
+			)
+			
+			RETURN
+			
+			IF(ISBLANK(VVendas),0,VVendas)
+			
+			```
+		lineageTag: 76c81538-50c9-4ad4-9cb6-f474220361d3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '62 Variação Faturamento (%)' = ```
+			
+			
+			Var VVariacao =
+			divide(
+			    [57 Vendas Ano Atual]-[61 Vendas Ano Anterior],[61 Vendas Ano Anterior],blank())
+			
+			RETURN
+			
+			IF(ISBLANK(VVariacao),0,VVariacao)
+			
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 78560779-f067-4a68-adb5-b4a7deb96fcb
+
+	measure 'SE ano selecionado' =
+			
+			
+			Var VAno =
+			SELECTEDVALUE(
+			    dCalendario[Year])
+			
+			Return
+			
+			IF(ISBLANK(VAno),MAX(dCalendario[Year]),VAno)
+		formatString: 0
+		lineageTag: f6a06474-d23c-4414-a8b2-0390e40a1d4d
+
+	measure 'SE ano anterior' =
+			
+			
+			[SE ano selecionado]-1
+		formatString: 0
+		lineageTag: bce728a4-c20c-4615-b22a-23361c8198bc
+
+	measure '63 Total faturamento bruto' = ```
+			
+			CALCULATE([05 Total de venda Bruto],USERELATIONSHIP(fVendas[Data de Faturamento],dCalendario[Data]))*-1
+			
+			
+			```
+		formatString: " ""R$""\ #,0.00;  ""R$""\ #,0.00;""R$""\ #,0.00; "
+		lineageTag: e5ed4522-8ca3-4564-897f-97671c3bd4a0
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	measure '64 Receita Líquida PY' =
+			
+			CALCULATE(
+			    [14 Receita Líquida],SAMEPERIODLASTYEAR(dCalendario[Data])
+			
+			
+			)
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: 4026517d-017b-49c3-bf50-4c5ab41772f6
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure '65 Receita Líquida YOY' = ```
+			
+			    [14 Receita Líquida] - [64 Receita Líquida PY]
+			```
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: bfa9883c-a284-4ea6-8188-4ea41e3a03d9
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure '66 Receita Líquida YOY (%)' = ```
+			
+			    DIVIDE([65 Receita Líquida YOY],[64 Receita Líquida PY],0)
+			
+			
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 70117d86-b16d-4933-acb9-8fe9390a1765
+
+	measure '67 Receita Líquida Total Geral' = ```
+			
+			    CALCULATE([14 Receita Líquida], ALL(dCalendario))
+			
+			
+			```
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: f8ce62ec-6121-418d-95a8-3f6ded98df3b
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure '68 Variação Receita Líquida Total (%)' = ```
+			
+			    DIVIDE([14 Receita Líquida],[67 Receita Líquida Total Geral],BLANK())
+			
+			
+			```
+		formatString: #,0.00%;-#,0.00%;#,0.00%
+		lineageTag: 1d4f5b8e-2561-4787-822a-a98f1e28c271
+
+	measure '69 Receita Líquita Total do Ano' = ```
+			
+			    CALCULATE([14 Receita Líquida],ALL(dCalendario[Month]))
+			
+			
+			
+			```
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: 8f4a10af-7614-447b-9b94-5afda7f4f339
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure '70 Variação Receita Líquida Total no Ano' = ```
+			
+			[14 Receita Líquida]/[69 Receita Líquita Total do Ano]
+			
+			
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 1631666a-9ba5-436a-99c2-1da57903e9b3
+
+	measure '71 Receita Líquida Acumulada' = ```
+			
+			    CALCULATE([14 Receita Líquida],DATESYTD(dCalendario[Data]))
+			
+			
+			
+			
+			
+			```
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: 006a7ed9-7f73-4ff4-8631-cc55bce7aebe
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure '72 Receita Anual Líquida Acumulada' = ```
+			
+			    TOTALYTD([14 Receita Líquida],dCalendario[Data])
+			
+			```
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: b31cd9a3-d6b5-4882-8c60-c4bad590c94f
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure '73 Receita Líquida Acumulada' = ```
+			
+			    CALCULATE([14 Receita Líquida],
+			        DATESBETWEEN(dCalendario[Data],BLANK(),MAX(dCalendario[Data]))
+			
+			)
+			```
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: 8aaa8fbe-b26f-44a1-9839-e0e71187567b
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure '74 Acumulado Móvel 3M' = ```
+			
+			    CALCULATE([14 Receita Líquida],
+			        DATESINPERIOD(dCalendario[Data],MAX(dCalendario[Data]),-3,MONTH)
+			
+			
+			)
+			```
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: 9fda1753-2b61-46a8-9197-e228c7d2a812
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure '75 SIM Venda Bruta' = ```
+			
+			[05 Total de venda Bruto] * (1+[SIMQuantidade Value]) * (1+[SIMPreço Value])
+			
+			
+			
+			```
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: 5e9b9e0d-df47-4c6e-a964-3870ec66b95e
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure '76 SIM Variação venda' = ```
+			
+			[75 SIM Venda Bruta]-[05 Total de venda Bruto]
+			
+			
+			```
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: 6ba01fff-87ca-4d53-9667-491769dc57dd
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure '77 SIM Custo' = ```
+			
+			[07 Total do Custo] * (1 + [SIMQuantidade Value]) * (1 + [SIMCustos Value])
+			
+			
+			```
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: 04a4085d-f2ac-48c9-8d0e-3082c6344d3a
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure '78 SIM Variação Custo' = [77 SIM Custo] - [07 Total do Custo]
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: c5dc56fa-8612-40ae-9c57-b95803ffcb82
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure '79 SIM Frete' = ```
+			
+			[02 Frete Total] * (1 + [SIMFrete Value])
+			
+			
+			
+			
+			```
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: c53d4dc7-b9fb-46bc-9f0f-53dc83c5779c
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure '80 SIM Variação Frete' = ```
+			
+			[79 SIM Frete] - [02 Frete Total]
+			
+			```
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: 96d7c714-5874-4a78-b92f-c380ab04ef8d
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure '81 SIM Desconto' = ```
+			
+			[13 Total do Desconto] * (1 + [SIMDesconto Value])
+			
+			
+			```
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: 13f6b9eb-061f-4f27-8c9b-7766ea5b6926
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure '82 SIM Variação Desconto' = ```
+			
+			[81 SIM Desconto]-[13 Total do Desconto]
+			
+			
+			```
+		formatString: "R$"\ #,0.00;-"R$"\ #,0.00;"R$"\ #,0.00
+		lineageTag: 18234440-d50c-468c-bc63-e1f1801ea416
+
+		annotation PBI_FormatHint = {"currencyCulture":"pt-BR"}
+
+	measure '83 SIM Receita Líquida' = ```
+			
+			[75 SIM Venda Bruta] - 
+			([79 SIM Frete]+[77 SIM Custo]+[81 SIM Desconto])
+			
+			
+			```
+		lineageTag: c562241a-8a15-4feb-bfb6-6ef8abaed528
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '84 SIM Variação da Receita' = ```
+			
+			[83 SIM Receita Líquida] - [14 Receita Líquida]
+			
+			```
+		lineageTag: 69dfbec6-fe93-473b-bbc7-5d9793f1d379
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '85 SIM Margem de Lucro (%)' = ```
+			
+			DIVIDE([83 SIM Receita Líquida],[75 SIM Venda Bruta],0)
+			
+			
+			
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 43899c25-dd8d-4250-aca4-858456a5a29f
+
+	measure '86 SIM Variação Receita (%)' = ```
+			
+			DIVIDE([83 SIM Receita Líquida],ABS([14 Receita Líquida]),0)-1
+			
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 56e5e48a-7dff-427c-bffb-1979c76a3270
+
+	measure '87 KPI Receita' = ```
+			
+			SWITCH(
+			    TRUE(),
+			    [86 SIM Variação Receita (%)] > 0.0000001, "🟢",
+			    [86 SIM Variação Receita (%)] < -0.000001, "🔴",
+			    "🟡")
+			
+			```
+		lineageTag: e6f8c352-6ae8-47b3-962f-7a0f85809d86
+
+	measure '88 Cross Número de Vendas' = ```
+			
+			
+			var TbVendas = Values(fVendas[idNota])
+			
+			var TbVendasAux = CALCULATETABLE(VALUES(fVendas[idNota]),ALL(dProduto), USERELATIONSHIP(fVendas[Produto], 'Aux Produto'[IdProduto]))
+			
+			var TbInter = INTERSECT(TbVendas, TbVendasAux)
+			
+			var vResultado = COUNTROWS(TbInter)
+			
+			RETURN
+			
+			IF(SELECTEDVALUE(dProduto[Sub-Categoria]) <> SELECTEDVALUE('Aux Produto'[Sub-Categoria]), vResultado, BLANK())
+			
+			
+			
+			```
+		formatString: 0
+		lineageTag: f188df8a-acc3-4b39-bc91-8e648a6307a1
+
+	measure '89 Cross Variação (%)' = DIVIDE([88 Cross Número de Vendas], [11 Quantidade de vendas], 0)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 8a2fb013-cf59-4e10-ac78-8d79b8ff319e
+
+	measure '90 Cross Sell Janeiro' = CALCULATE([88 Cross Número de Vendas], dCalendario[Month] = 1)
+		formatString: 0
+		lineageTag: 3307575f-d27d-446e-9bee-be722d0a251c
+
+	measure '91 Cross Sell Fevereiro' = CALCULATE([88 Cross Número de Vendas], dCalendario[Month] = 2)
+		formatString: 0
+		lineageTag: 8217ebe8-01e0-48bd-9a0e-2795196a38e9
+
+	measure '92 Cross Sell Março' = CALCULATE([88 Cross Número de Vendas], dCalendario[Month] = 3)
+		formatString: 0
+		lineageTag: cfeb9cf5-4daa-42f2-81ab-e6c6fbcfb997
+
+	measure '93 Cross Sell Abril' = CALCULATE([88 Cross Número de Vendas], dCalendario[Month] = 4)
+		formatString: 0
+		lineageTag: bb48d28a-1dcf-4b2a-b29c-40b13207bfdc
+
+	measure '94 Cross Sell Maio' = CALCULATE([88 Cross Número de Vendas], dCalendario[Month] = 5)
+		formatString: 0
+		lineageTag: 7b7fc49b-c1fa-4b4c-b9ca-c5d04e9b6696
+
+	measure '95 Cross Sell Junho' = CALCULATE([88 Cross Número de Vendas], dCalendario[Month] = 6)
+		formatString: 0
+		lineageTag: 12031ce8-a934-4fc6-a22e-0545969bd4a0
+
+	measure '96 Cross Sell Julho' = CALCULATE([88 Cross Número de Vendas], dCalendario[Month] = 7)
+		formatString: 0
+		lineageTag: 533036df-d4e7-4685-bcc6-21aa10ef7f34
+
+	measure '97 Cross Sell Agosto' = CALCULATE([88 Cross Número de Vendas], dCalendario[Month] = 8)
+		formatString: 0
+		lineageTag: 225933f1-32c4-4cf4-95ef-35d392c54d8e
+
+	measure '98 Cross Sell Setembro' = CALCULATE([88 Cross Número de Vendas], dCalendario[Month] = 9)
+		formatString: 0
+		lineageTag: d35f0c89-5584-4e50-976a-39b591f2af47
+
+	measure '99 Cross Sell Outubro' = CALCULATE([88 Cross Número de Vendas], dCalendario[Month] = 10)
+		formatString: 0
+		lineageTag: c06316b0-d87b-40ae-aeea-dd86c96d8208
+
+	measure '991 Cross Sell Novembro' = CALCULATE([88 Cross Número de Vendas], dCalendario[Month] = 11)
+		formatString: 0
+		lineageTag: d2069385-3d44-4a37-8db4-c917e11b015e
+
+	measure '992 Cross Sell Dezembro' = CALCULATE([88 Cross Número de Vendas], dCalendario[Month] = 12)
+		formatString: 0
+		lineageTag: 448466ff-6606-48df-9aa4-4eac4666d1d9
+
+	partition Medidas = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Column1"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+

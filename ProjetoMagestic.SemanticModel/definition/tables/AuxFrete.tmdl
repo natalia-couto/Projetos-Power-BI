@@ -1,0 +1,51 @@
+table AuxFrete
+	isHidden
+	lineageTag: 81ea0917-3ae4-4d0d-9f51-3324239373b9
+
+	column VLFrete
+		dataType: double
+		isHidden
+		lineageTag: d4137964-12d5-40db-899f-e7f0b2a6e023
+		summarizeBy: sum
+		sourceColumn: VLFrete
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column idNota
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: d4c9a7dc-3cfc-40f6-bdb2-3f39a46d5260
+		summarizeBy: sum
+		sourceColumn: idNota
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition AuxFrete = m
+		mode: import
+		source =
+				let
+				    Source = fVendas,
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"idNota", "Frete"}),
+				    #"Grouped Rows" = Table.Group(#"Removed Other Columns", {"idNota", "Frete"}, {{"Linhas", each _, type table [idNota=nullable number, Frete=nullable number]}}),
+				    #"Added Custom" = Table.AddColumn(#"Grouped Rows", "Registros", each Table.RowCount([Linhas])),
+				    #"Removed Columns" = Table.RemoveColumns(#"Added Custom",{"Linhas"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Removed Columns",{{"Registros", Int64.Type}}),
+				    #"Added Custom1" = Table.AddColumn(#"Changed Type", "VLFrete", each [Frete] / [Registros]),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Added Custom1",{{"VLFrete", type number}}),
+				    #"Removed Other Columns1" = Table.SelectColumns(#"Changed Type1",{"VLFrete", "idNota"})
+				in
+				    #"Removed Other Columns1"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

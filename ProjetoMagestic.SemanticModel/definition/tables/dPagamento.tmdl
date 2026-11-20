@@ -1,0 +1,35 @@
+table dPagamento
+	lineageTag: dee4d387-701b-44b0-859f-d9b190383ebb
+
+	column idPagamento
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: e2a51c44-82ee-4db3-93cc-2bfa691113ba
+		summarizeBy: none
+		sourceColumn: idPagamento
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Forma
+		dataType: string
+		lineageTag: 766894ca-7037-4443-a942-d348f3a3a5cd
+		summarizeBy: none
+		sourceColumn: Forma
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dPagamento = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\CoutoN\OneDrive - BASF\Documents\1. Arquivos Pessoais\Projeto Magestic\Dados\Majestic Exportadora Mini.xlsx"), null, true),
+				    dPagamento_Table = Source{[Item="dPagamento",Kind="Table"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(dPagamento_Table,{{"idPagamento", Int64.Type}, {"Forma", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

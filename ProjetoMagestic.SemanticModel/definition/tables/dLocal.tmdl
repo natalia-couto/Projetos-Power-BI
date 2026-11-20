@@ -1,0 +1,70 @@
+table dLocal
+	lineageTag: 48ad49b1-6070-43db-a76a-9d2e2d19bcb2
+
+	column IdCidade
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 259f1e27-1175-41bd-9b06-fc740a68affa
+		summarizeBy: none
+		sourceColumn: IdCidade
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cidade
+		dataType: string
+		lineageTag: aab5f8d2-0474-4b68-8f3b-e93917fc81fa
+		summarizeBy: none
+		sourceColumn: Cidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column Estado
+		dataType: string
+		lineageTag: e4f42ac0-9718-4e39-8fe9-1376b16bb90b
+		summarizeBy: none
+		sourceColumn: Estado
+
+		annotation SummarizationSetBy = Automatic
+
+	column País
+		dataType: string
+		lineageTag: 021fae66-27c8-48bd-b2be-6bde94e8606e
+		summarizeBy: none
+		sourceColumn: País
+
+		annotation SummarizationSetBy = Automatic
+
+	column Continente
+		dataType: string
+		lineageTag: 2d7af71a-0f22-469c-b688-af93e8d14033
+		summarizeBy: none
+		sourceColumn: Continente
+
+		annotation SummarizationSetBy = Automatic
+
+	column Bandeira
+		dataType: string
+		lineageTag: ff325ef7-5d53-4253-ae27-5640f7e63dfe
+		dataCategory: ImageUrl
+		summarizeBy: none
+		sourceColumn: Bandeira
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dLocal = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\CoutoN\OneDrive - BASF\Documents\1. Arquivos Pessoais\Projeto Magestic\Dados\Majestic Exportadora Mini.xlsx"), null, true),
+				    dLocal_Table = Source{[Item="dLocal",Kind="Table"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(dLocal_Table,{{"IdCidade", Int64.Type}, {"Cidade", type text}, {"Estado", type text}, {"País", type text}, {"Continente", type text}, {"Bandeira", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,26 @@
+table SIMPreço
+	lineageTag: eea92bcc-82bd-471c-949b-dd7c2b60fef5
+
+	measure 'SIMPreço Value' = SELECTEDVALUE('SIMPreço'[SIMPreço], 0)
+		formatString: 0%;-0%;0%
+		lineageTag: 463408d6-9616-4ac3-84d2-2729fcb087c7
+
+	column SIMPreço
+		formatString: 0%;-0%;0%
+		lineageTag: 8627fe62-71b8-42e4-b5c3-e5981fd6b9bd
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition SIMPreço = calculated
+		mode: import
+		source = GENERATESERIES(-1, 1, 0.02)
+
+	annotation PBI_Id = ceb30d0ca4634362ae16c79051e3fc7a
+

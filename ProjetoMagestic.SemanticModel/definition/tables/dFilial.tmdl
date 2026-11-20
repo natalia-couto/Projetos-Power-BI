@@ -1,0 +1,75 @@
+table dFilial
+	lineageTag: b68ab7a5-bcf1-4741-b83a-55125d1ba8f3
+
+	column IdGerencia
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 9df6e6c5-1ca0-4c06-8ab4-acea8f9aa981
+		summarizeBy: none
+		sourceColumn: IdGerencia
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Filial
+		dataType: string
+		lineageTag: 45ab36eb-6914-4082-a4ff-1889067466b1
+		summarizeBy: none
+		sourceColumn: Filial
+
+		annotation SummarizationSetBy = Automatic
+
+	column Fantasia
+		dataType: string
+		lineageTag: 79a49558-601e-4767-b6ee-581f8ad64cd1
+		summarizeBy: none
+		sourceColumn: Fantasia
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cidade
+		dataType: string
+		lineageTag: 4c4264d5-0e4d-450b-b73f-edaf5254a74d
+		summarizeBy: none
+		sourceColumn: Cidade
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Nome Estado'
+		dataType: string
+		lineageTag: 3df41ad3-2841-4703-8d16-76f8c3b81d2f
+		summarizeBy: none
+		sourceColumn: Nome Estado
+
+		annotation SummarizationSetBy = Automatic
+
+	column Estado
+		dataType: string
+		lineageTag: b058f892-3b6d-40c0-9b19-1e5f0daa0b70
+		summarizeBy: none
+		sourceColumn: Estado
+
+		annotation SummarizationSetBy = Automatic
+
+	column Região
+		dataType: string
+		lineageTag: d02e1340-053d-4851-a08c-c68aefd77b04
+		summarizeBy: none
+		sourceColumn: Região
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dFilial = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\CoutoN\OneDrive - BASF\Documents\1. Arquivos Pessoais\Projeto Magestic\Dados\Majestic Exportadora Mini.xlsx"), null, true),
+				    dFilial_Table = Source{[Item="dFilial",Kind="Table"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(dFilial_Table,{{"IdGerencia", Int64.Type}, {"Filial", type text}, {"Fantasia", type text}, {"Cidade", type text}, {"Nome Estado", type text}, {"Estado", type text}, {"Região", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

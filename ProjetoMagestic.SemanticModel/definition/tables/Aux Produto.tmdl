@@ -1,0 +1,73 @@
+table 'Aux Produto'
+	lineageTag: d96629ef-62d7-4f6c-a857-967026a1026d
+
+	column IdProduto
+		formatString: 0
+		lineageTag: 7f40186c-6797-4f27-bca4-89011c6d8f2f
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: dProduto[IdProduto]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nome
+		lineageTag: 049b6051-378c-4766-a02a-0cfe1f137e33
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: dProduto[Nome]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Valor Unitario'
+		lineageTag: bc629ed4-6462-4e4d-a292-7a418038206f
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: dProduto[Valor Unitario]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Custo Unitário'
+		lineageTag: a653f862-a367-4bc1-9635-ac51416255df
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: dProduto[Custo Unitário]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Sub-Categoria
+		lineageTag: 2d11b55e-d721-443d-b06c-3b36f30ba1ba
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: dProduto[Sub-Categoria]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Categoria
+		lineageTag: 23e67b7f-9f00-4081-b0ad-7ed388d05a8c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: dProduto[Categoria]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sub-Cat URL'
+		lineageTag: 0f5c32dc-9c2a-48fa-9883-0fa0b7986c3f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: dProduto[Sub-Cat URL]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Aux Produto' = calculated
+		mode: import
+		source = ```
+				dProduto
+				
+				```
+
+	annotation PBI_Id = b4bcc8b2c3f247b8aed41aaba126e2ab
+

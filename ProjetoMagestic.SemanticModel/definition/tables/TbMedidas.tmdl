@@ -1,0 +1,32 @@
+table TbMedidas
+	lineageTag: b182fefd-5cb9-4e8b-b4fa-8189dbc7c2a2
+
+	column Medida
+		dataType: string
+		lineageTag: f99feaa5-4ee6-4578-b5f5-924e35f894cb
+		summarizeBy: none
+		sourceColumn: Medida
+
+		annotation SummarizationSetBy = Automatic
+
+	column Código
+		dataType: string
+		lineageTag: 56ec2e64-d410-43c8-8ca2-29cd20dd6529
+		summarizeBy: none
+		sourceColumn: Código
+
+		annotation SummarizationSetBy = Automatic
+
+	partition TbMedidas = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WCkvNS0ksVnAqKi3JV1DSUXIKClGK1YlWCixJSVVwzslMzStJBQoHhjgjhCF6wKJhYNGg1OTUzJJEBZ/DawtLM1MSgVI+noFKsbEA", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Medida = _t, Código = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Medida", type text}, {"Código", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegação
+

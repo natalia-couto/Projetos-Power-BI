@@ -1,0 +1,256 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 562.23231532565512,
+        "y": 211.68384879725087
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 365,
+            "y": 0
+          },
+          "nodeIndex": "dCliente",
+          "nodeLineageTag": "78a5e303-a3f6-417e-be8c-223d57067e57",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2,
+            "y": 320.79015654627494
+          },
+          "nodeIndex": "dFilial",
+          "nodeLineageTag": "b68ab7a5-bcf1-4741-b83a-55125d1ba8f3",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 15
+          },
+          "nodeIndex": "dLocal",
+          "nodeLineageTag": "48ad49b1-6070-43db-a76a-9d2e2d19bcb2",
+          "size": {
+            "height": 190,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 651.19015711847953
+          },
+          "nodeIndex": "dPagamento",
+          "nodeLineageTag": "dee4d387-701b-44b0-859f-d9b190383ebb",
+          "size": {
+            "height": 145,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 722,
+            "y": 216.18030584462508
+          },
+          "nodeIndex": "dProduto",
+          "nodeLineageTag": "59e99291-6505-42b3-9087-e4a588bca8d0",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 721,
+            "y": 0
+          },
+          "nodeIndex": "dVendedor",
+          "nodeLineageTag": "08a5f857-0651-4942-8313-267568dbfed8",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 365,
+            "y": 317.7710725737802
+          },
+          "nodeIndex": "fVendas",
+          "nodeLineageTag": "ad8518a7-844a-41b0-afde-fc6d2b6fd1ba",
+          "size": {
+            "height": 466,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 729,
+            "y": 505.19015807215385
+          },
+          "nodeIndex": "dCalendario",
+          "nodeLineageTag": "69235e99-fe94-43e0-9273-168b8d243dbb",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1016.4047604846978,
+            "y": 0
+          },
+          "nodeIndex": "AuxFrete",
+          "nodeLineageTag": "81ea0917-3ae4-4d0d-9f51-3324239373b9",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 345.40476048469782,
+            "y": 838.795075984319
+          },
+          "nodeIndex": "fMetas",
+          "nodeLineageTag": "47a5faea-3c2c-49d8-8ee5-4753b7a1306f",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1300.4047604846978,
+            "y": 217.95423902308738
+          },
+          "nodeIndex": "Medidas",
+          "nodeLineageTag": "17482034-0c12-46b1-833e-34ab627e91e3",
+          "size": {
+            "height": 329.44329896907215,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1584.4047604846978,
+            "y": 431.39753799215953
+          },
+          "nodeIndex": "TbMedidas",
+          "nodeLineageTag": "b182fefd-5cb9-4e8b-b4fa-8189dbc7c2a2",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1868.4047604846978,
+            "y": 383.39753799215953
+          },
+          "nodeIndex": "SIMQuantidade",
+          "nodeLineageTag": "d5cf0677-2009-44f5-a47b-81e839158fbc",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2152.4047604846978,
+            "y": 383.39753799215953
+          },
+          "nodeIndex": "SIMPreço",
+          "nodeLineageTag": "eea92bcc-82bd-471c-949b-dd7c2b60fef5",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2436.4047604846978,
+            "y": 383.39753799215953
+          },
+          "nodeIndex": "SIMFrete",
+          "nodeLineageTag": "c39c07ed-07b8-4a99-bb85-3030c507fb24",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2720.4047604846978,
+            "y": 383.39753799215953
+          },
+          "nodeIndex": "SIMCustos",
+          "nodeLineageTag": "d8ac68dc-f549-45be-a8ac-db6c5a498956",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3004.4047604846978,
+            "y": 383.39753799215953
+          },
+          "nodeIndex": "SIMDesconto",
+          "nodeLineageTag": "92688ca8-d00e-4b1c-9f05-6eb1669c970a",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1003.2776127183749,
+            "y": 215.46626651449628
+          },
+          "nodeIndex": "Aux Produto",
+          "nodeLineageTag": "d96629ef-62d7-4f6c-a857-967026a1026d",
+          "size": {
+            "height": 249.74570446735396,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 94.480519480519476,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

@@ -1,0 +1,72 @@
+table dCliente
+	lineageTag: 78a5e303-a3f6-417e-be8c-223d57067e57
+
+	column idCliente
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: a5608023-d336-42fd-b9c5-486140c7a107
+		summarizeBy: none
+		sourceColumn: idCliente
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nome
+		dataType: string
+		lineageTag: 4711bda9-7884-47a4-8b80-b522d48876c6
+		summarizeBy: none
+		sourceColumn: Nome
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tipo
+		dataType: string
+		lineageTag: 8e47dcc6-3eca-45c7-8197-49e5c61496af
+		summarizeBy: none
+		sourceColumn: Tipo
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Media de Alunos'
+		dataType: int64
+		formatString: 0
+		lineageTag: 682587f4-830d-471c-9c12-6c4d50888381
+		summarizeBy: sum
+		sourceColumn: Media de Alunos
+
+		annotation SummarizationSetBy = Automatic
+
+	column Classificacao
+		dataType: string
+		lineageTag: 5e847f3b-eb3d-428a-ab68-71508381645b
+		summarizeBy: none
+		sourceColumn: Classificacao
+
+		annotation SummarizationSetBy = Automatic
+
+	column idCidade
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: a75d1bba-312d-4189-b544-07d3c10e95cd
+		summarizeBy: none
+		sourceColumn: idCidade
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dCliente = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\CoutoN\OneDrive - BASF\Documents\1. Arquivos Pessoais\Projeto Magestic\Dados\Majestic Exportadora Mini.xlsx"), null, true),
+				    dCliente_Table = Source{[Item="dCliente",Kind="Table"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(dCliente_Table,{{"idCliente", Int64.Type}, {"Nome", type text}, {"Tipo", type text}, {"Media de Alunos", Int64.Type}, {"Classificacao", type text}, {"idCidade", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

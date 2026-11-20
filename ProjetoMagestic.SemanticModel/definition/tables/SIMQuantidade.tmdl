@@ -1,0 +1,26 @@
+table SIMQuantidade
+	lineageTag: d5cf0677-2009-44f5-a47b-81e839158fbc
+
+	measure 'SIMQuantidade Value' = SELECTEDVALUE('SIMQuantidade'[SIMQuantidade], 0)
+		formatString: 0%;-0%;0%
+		lineageTag: 1f8801df-b2a3-43fc-9c4f-e92d8bf01998
+
+	column SIMQuantidade
+		formatString: 0%;-0%;0%
+		lineageTag: 7e971f40-c658-4bb6-8533-7638bcd1c1c4
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition SIMQuantidade = calculated
+		mode: import
+		source = GENERATESERIES(-1, 1, 0.02)
+
+	annotation PBI_Id = ff8b2c75958c48e3900636aee1727a5b
+

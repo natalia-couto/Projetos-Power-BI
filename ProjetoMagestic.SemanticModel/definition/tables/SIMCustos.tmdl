@@ -1,0 +1,26 @@
+table SIMCustos
+	lineageTag: d8ac68dc-f549-45be-a8ac-db6c5a498956
+
+	measure 'SIMCustos Value' = SELECTEDVALUE('SIMCustos'[SIMCustos], 0)
+		formatString: 0%;-0%;0%
+		lineageTag: ba413ade-5031-46b2-9cf8-1d3e29bf3677
+
+	column SIMCustos
+		formatString: 0%;-0%;0%
+		lineageTag: c383b2c2-dbd4-46af-b1c6-68043ea649b7
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition SIMCustos = calculated
+		mode: import
+		source = GENERATESERIES(-1, 1, 0.02)
+
+	annotation PBI_Id = 6f173aac366846a2afc809cbf21fe68e
+

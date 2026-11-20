@@ -1,0 +1,47 @@
+table fMetas
+	lineageTag: 47a5faea-3c2c-49d8-8ee5-4753b7a1306f
+
+	column Mes
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 5a634eb1-cda0-4192-a9f1-f40d77f6959d
+		summarizeBy: none
+		sourceColumn: Mes
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column idGerencia
+		dataType: int64
+		formatString: 0
+		lineageTag: 0cadc3d0-c384-4702-a203-da0c8114feff
+		summarizeBy: none
+		sourceColumn: idGerencia
+
+		annotation SummarizationSetBy = Automatic
+
+	column Meta
+		dataType: double
+		formatString: 0
+		lineageTag: b57d452d-8b56-4df5-95cb-d4ec33c2f2e7
+		summarizeBy: sum
+		sourceColumn: Meta
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fMetas = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\CoutoN\OneDrive - BASF\Documents\1. Arquivos Pessoais\Projeto Magestic\Dados\Arquivo de Metas.txt"),[Delimiter="#(tab)", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type with Locale" = Table.TransformColumnTypes(#"Promoted Headers", {{"Meta", type number}}, "en-US"),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Changed Type with Locale",{{"Mes", type date}, {"idGerencia", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,26 @@
+table SIMDesconto
+	lineageTag: 92688ca8-d00e-4b1c-9f05-6eb1669c970a
+
+	measure 'SIMDesconto Value' = SELECTEDVALUE('SIMDesconto'[SIMDesconto], 0)
+		formatString: 0%;-0%;0%
+		lineageTag: 6f11a0d6-a8c9-4d52-a7e3-756014878506
+
+	column SIMDesconto
+		formatString: 0%;-0%;0%
+		lineageTag: 2ba81c89-7b2f-427f-9170-2f756e72ff2b
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 0
+				}
+
+		annotation SummarizationSetBy = User
+
+	partition SIMDesconto = calculated
+		mode: import
+		source = GENERATESERIES(-1, 1, 0.02)
+
+	annotation PBI_Id = 7d90283583884ddaa47370199cb05ad8
+

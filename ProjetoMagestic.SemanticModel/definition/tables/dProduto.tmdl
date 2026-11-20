@@ -1,0 +1,85 @@
+table dProduto
+	lineageTag: 59e99291-6505-42b3-9087-e4a588bca8d0
+
+	column IdProduto
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 58dbdaa2-2c79-44a0-8ed2-0904971cff5f
+		summarizeBy: none
+		sourceColumn: IdProduto
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nome
+		dataType: string
+		lineageTag: f9435cac-1e68-4773-b23e-c43e6b94c5f2
+		summarizeBy: none
+		sourceColumn: Nome
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Valor Unitario'
+		dataType: double
+		isHidden
+		lineageTag: 7dce24ee-4dc4-463e-92a3-4560fc2445e0
+		summarizeBy: none
+		sourceColumn: Valor Unitario
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Custo Unitário'
+		dataType: double
+		isHidden
+		lineageTag: 3138adf2-8b41-4f37-b666-98d61ca39aea
+		summarizeBy: none
+		sourceColumn: Custo Unitário
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Sub-Categoria
+		dataType: string
+		lineageTag: 16e23c29-6d68-45f9-8aa6-8c360f9ef568
+		summarizeBy: none
+		sourceColumn: Sub-Categoria
+
+		annotation SummarizationSetBy = Automatic
+
+	column Categoria
+		dataType: string
+		lineageTag: 18c36eb9-3f71-437e-9c5b-7c5ad142c633
+		summarizeBy: none
+		sourceColumn: Categoria
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sub-Cat URL'
+		dataType: string
+		lineageTag: 78f41cb7-aed9-4f51-a6a3-f36f90eb186b
+		summarizeBy: none
+		sourceColumn: Sub-Cat URL
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dProduto = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\CoutoN\OneDrive - BASF\Documents\1. Arquivos Pessoais\Projeto Magestic\Dados\Majestic Exportadora Mini.xlsx"), null, true),
+				    dProduto_Table = Source{[Item="dProduto",Kind="Table"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(dProduto_Table,{{"IdProduto", Int64.Type}, {"Nome", type text}, {"Valor Unitario", type number}, {"Custo Unitário", type number}, {"Sub-Categoria", type text}, {"Categoria", type text}, {"Sub-Cat URL", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
