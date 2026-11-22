@@ -2,8 +2,7 @@
 
 > Interactive Power BI report for a fictitious exporter of school supplies, electronics and accessories. It covers sales performance, targets vs. actuals, sales-manager ranking, cross-sell analysis and a **what-if simulator** that shows how changes in price, volume, cost, freight and discounts affect margin.
 
-<!-- Demo GIF: uncomment the line below after uploading images/dashboard-demo.gif -->
-<!-- ![Dashboard demo](images/dashboard-demo.gif) -->
+![Dashboard demo](images/dashboard-demo.gif)
 
 ---
 
