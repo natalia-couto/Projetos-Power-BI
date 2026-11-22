@@ -30,6 +30,22 @@
 
 ---
 
+## 🖼️ Screenshots
+
+**What-if simulator**
+
+![What-if simulator](images/simulador.png)
+
+**Targets by branch**
+
+![Targets by branch](images/analise%20comparativa.png)
+
+**Overview**
+
+![Overview](images/analise%20geral.png)
+
+---
+
 ## 🧱 Data model
 
 **Star schema** with two fact tables at different grains:
