@@ -6,7 +6,7 @@
 
 ---
 
-## 🎯 Business questions
+## Business questions
 
 - How are gross sales, margin and average ticket evolving by month, year, continent and product category?
 - Which branches are above or below target, and how do they compare with the previous year?
@@ -16,7 +16,7 @@
 
 ---
 
-## 📊 Report pages
+## Report pages
 
 | # | Page | What it shows |
 |---|------|---------------|
@@ -30,7 +30,7 @@
 
 ---
 
-## 🖼️ Screenshots
+## Screenshots
 
 **What-if simulator**
 
@@ -46,7 +46,7 @@
 
 ---
 
-## 🧱 Data model
+## Data model
 
 **Star schema** with two fact tables at different grains:
 
@@ -59,7 +59,7 @@ Supporting tables: a dedicated measure table, a field parameter for metric switc
 
 ---
 
-## 🧮 DAX highlights
+## DAX highlights
 
 - **Inactive relationship + `USERELATIONSHIP`** to analyze sales by invoice date instead of order date
 - **Time intelligence:** `SAMEPERIODLASTYEAR`, `DATEADD`, `DATESYTD` and `DATESINPERIOD` (3-month rolling total)
@@ -70,7 +70,7 @@ Supporting tables: a dedicated measure table, a field parameter for metric switc
 
 ---
 
-## ▶️ How to open
+## How to open
 
 1. Clone this repository and open `ProjetoMagestic.pbip` in a recent version of **Power BI Desktop** (PBIP support required).
 2. The source files are not included. In **Transform data → Data source settings**, point the source to `Majestic Exportadora Mini.xlsx` and `Arquivo de Metas.txt`.
@@ -80,7 +80,7 @@ Supporting tables: a dedicated measure table, a field parameter for metric switc
 
 ---
 
-## 🔧 Next improvements
+## Next improvements
 
 - Rename *Receita Líquida* to **Contribution Margin** (gross sales − cost − freight − discount) and add a P&L-style waterfall
 - Show year-over-year variation in absolute values (R$) in the waterfall chart
@@ -90,17 +90,17 @@ Supporting tables: a dedicated measure table, a field parameter for metric switc
 
 ---
 
-## 🛠️ Tools
+## Tools
 
 Power BI Desktop (PBIP / TMDL) · Power Query (M) · DAX
 
-## 📁 About the data
+## About the data
 
 Fictitious sample dataset (*Majestic Exportadora*) used for study purposes. It contains no real company data.
 
 ---
 
-## 👩‍💻 Author
+## Author
 
 **Natália Couto de Oliveira** – BI & Financial Analyst · Montevideo, Uruguay
 [LinkedIn](https://www.linkedin.com/in/natcoliveira/)
